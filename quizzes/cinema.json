@@ -1,0 +1,49 @@
+{
+  "name": "Cinema",
+  "description": "Film, registi e icone del grande schermo.",
+  "questions": [
+    {
+      "id": "ci1",
+      "type": "multiple_choice",
+      "text": "Chi ha diretto 'Pulp Fiction'?",
+      "points": 1,
+      "params": {
+        "options": ["Martin Scorsese", "Quentin Tarantino", "Stanley Kubrick", "Steven Spielberg"],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "ci2",
+      "type": "true_false",
+      "text": "'Il Padrino' ha vinto l'Oscar come miglior film nel 1973.",
+      "points": 1,
+      "params": { "correct_answer": true }
+    },
+    {
+      "id": "ci3",
+      "type": "open_ended",
+      "text": "Regista de 'La vita è bella'?",
+      "points": 2,
+      "params": {
+        "accepted_answers": ["Roberto Benigni", "Benigni"]
+      }
+    },
+    {
+      "id": "ci4",
+      "type": "multiple_choice",
+      "text": "Quale film ha vinto l'Oscar nel 2020?",
+      "points": 1,
+      "params": {
+        "options": ["1917", "Joker", "Parasite", "C'era una volta a Hollywood"],
+        "correct_index": 2
+      }
+    },
+    {
+      "id": "ci5",
+      "type": "true_false",
+      "text": "Charlie Chaplin ha vinto un Oscar onorario nel 1972.",
+      "points": 1,
+      "params": { "correct_answer": true }
+    }
+  ]
+}

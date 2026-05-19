@@ -1,0 +1,49 @@
+{
+  "name": "Storia",
+  "description": "Domande di storia generale, dall'antichità all'età moderna.",
+  "questions": [
+    {
+      "id": "st1",
+      "type": "multiple_choice",
+      "text": "In che anno cadde l'Impero Romano d'Occidente?",
+      "points": 1,
+      "params": {
+        "options": ["410 d.C.", "476 d.C.", "1453 d.C.", "800 d.C."],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "st2",
+      "type": "true_false",
+      "text": "Cristoforo Colombo scoprì l'America nel 1492.",
+      "points": 1,
+      "params": { "correct_answer": true }
+    },
+    {
+      "id": "st3",
+      "type": "open_ended",
+      "text": "Chi guidò la spedizione dei Mille?",
+      "points": 2,
+      "params": {
+        "accepted_answers": ["Giuseppe Garibaldi", "Garibaldi"]
+      }
+    },
+    {
+      "id": "st4",
+      "type": "multiple_choice",
+      "text": "In che anno cadde il Muro di Berlino?",
+      "points": 1,
+      "params": {
+        "options": ["1985", "1989", "1991", "1995"],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "st5",
+      "type": "true_false",
+      "text": "La Prima Guerra Mondiale finì nel 1917.",
+      "points": 1,
+      "params": { "correct_answer": false }
+    }
+  ]
+}

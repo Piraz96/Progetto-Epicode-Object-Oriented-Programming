@@ -1,0 +1,81 @@
+@startuml architecture-diagram
+' QuizMaster — architettura a package / flusso dati.
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+
+actor "Utente" as user
+
+package "quizmaster (jar)" {
+  [QuizMasterApp.main] as main
+
+  package "cli" {
+    [Menu]
+    [ConsoleUI]
+    [InputReader]
+    [AnsiColor]
+  }
+  package "loader" {
+    [QuizLoader]
+  }
+  package "factory" {
+    [QuestionFactory]
+  }
+  package "core" {
+    [Composite tree:\nCategory > Quiz > Question]
+  }
+  package "iterator" {
+    [ShuffleIterator]
+  }
+  package "session" {
+    [QuizSession]
+    [Scoreboard]
+  }
+  package "timer" {
+    [CountdownTimer]
+  }
+  package "scoring" {
+    [ScoringStrategy]
+    [ClassicScoring]
+    [TimeBoundScoring]
+  }
+  package "events" {
+    [QuizEventBus]
+    [ConsoleAnimationListener]
+    [StatsCollectorListener]
+  }
+  package "shielding" {
+    [ExceptionShield]
+  }
+  package "logging" {
+    [LoggingConfig]
+  }
+}
+
+database "quizzes/*.json" as quizjson
+file "scoreboard.json" as sbfile
+file "quizmaster.log" as logf
+
+user --> main : stdin (menu)
+main --> LoggingConfig
+main --> ExceptionShield : wraps everything
+main --> QuizLoader
+quizjson --> QuizLoader : read
+QuizLoader --> QuestionFactory
+QuestionFactory --> "core"
+main --> Menu
+Menu --> ConsoleUI
+Menu --> InputReader
+Menu --> QuizSession
+Menu --> Scoreboard
+QuizSession --> ShuffleIterator
+QuizSession --> CountdownTimer
+QuizSession --> ScoringStrategy
+QuizSession --> QuizEventBus
+CountdownTimer --> QuizEventBus : TimerTick/Expired
+QuizEventBus --> ConsoleAnimationListener
+QuizEventBus --> StatsCollectorListener
+ConsoleAnimationListener --> user : stdout (animazioni)
+Scoreboard --> sbfile : top-10 persistente
+LoggingConfig --> logf : dettaglio FINE
+
+@enduml

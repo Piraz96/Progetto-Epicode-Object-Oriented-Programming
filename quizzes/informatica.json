@@ -1,0 +1,47 @@
+{
+  "name": "Informatica",
+  "description": "Linguaggi, sistemi operativi e fondamenti dell'IT.",
+  "questions": [
+    {
+      "id": "in1",
+      "type": "multiple_choice",
+      "text": "Chi ha inventato il World Wide Web?",
+      "points": 1,
+      "params": {
+        "options": ["Bill Gates", "Tim Berners-Lee", "Steve Jobs", "Linus Torvalds"],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "in2",
+      "type": "open_ended",
+      "text": "Il sistema operativo creato da Linus Torvalds.",
+      "points": 1,
+      "params": { "accepted_answers": ["Linux", "GNU/Linux"] }
+    },
+    {
+      "id": "in3",
+      "type": "true_false",
+      "text": "Java è stato creato negli anni '90.",
+      "points": 1,
+      "params": { "correct_answer": true }
+    },
+    {
+      "id": "in4",
+      "type": "multiple_choice",
+      "text": "Quale di questi NON è un linguaggio di programmazione?",
+      "points": 1,
+      "params": {
+        "options": ["Python", "HTML", "Ruby", "Kotlin"],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "in5",
+      "type": "open_ended",
+      "text": "Sigla che identifica un protocollo per le pagine web sicure.",
+      "points": 1,
+      "params": { "accepted_answers": ["HTTPS", "https"] }
+    }
+  ]
+}

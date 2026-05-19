@@ -1,0 +1,150 @@
+@startuml class-diagram
+' QuizMaster — diagramma di classe (4 pattern obbligatori + opzionali)
+skinparam classAttributeIconSize 0
+hide empty members
+
+' === Composite (obbligatorio) ===
+interface QuizElement {
+  +title(): String
+  +totalQuestions(): int
+  +isComposite(): boolean
+}
+
+abstract class Question {
+  #id: String
+  #text: String
+  #basePoints: int
+  +{abstract} isCorrect(answer: String): boolean
+  +{abstract} correctAnswerText(): String
+  +{abstract} prompt(): String
+}
+
+class Quiz {
+  -name: String
+  -description: String
+  -questions: List<Question>
+}
+
+class Category {
+  -name: String
+  -quizzes: List<Quiz>
+}
+
+QuizElement <|.. Question
+QuizElement <|.. Quiz
+QuizElement <|.. Category
+Quiz o--> "*" Question : questions
+Category o--> "*" Quiz : quizzes
+
+class MultipleChoiceQuestion
+class TrueFalseQuestion
+class OpenEndedQuestion
+Question <|-- MultipleChoiceQuestion
+Question <|-- TrueFalseQuestion
+Question <|-- OpenEndedQuestion
+
+' === Factory (obbligatorio) ===
+class QuestionFactory {
+  +create(type, id, text, points, params): Question
+}
+QuestionFactory ..> Question : creates
+
+' === Iterator (obbligatorio) ===
+class ShuffleIterator implements Iterator {
+  -shuffled: Question[]
+  +hasNext(): boolean
+  +next(): Question
+}
+ShuffleIterator --> Question
+
+' === Exception Shielding (obbligatorio) ===
+class ExceptionShield <<utility>> {
+  +run(operation, action): T
+  +runVoid(operation, action): void
+}
+class QuizException
+class QuizLoadException
+class QuizSessionException
+QuizException <|-- QuizLoadException
+QuizException <|-- QuizSessionException
+ExceptionShield ..> QuizException
+
+' === Multithreading (opzionale, +8) ===
+class CountdownTimer {
+  -scheduler: ScheduledExecutorService
+  -cancelled: AtomicBoolean
+  -expired: AtomicBoolean
+  +start(): void
+  +cancel(): void
+  +shutdown(): void
+}
+
+' === Observer (opzionale, +5) ===
+interface QuizEventListener
+class QuizEventBus {
+  -listeners: CopyOnWriteArrayList<QuizEventListener>
+  +subscribe(l): void
+  +publish(e): void
+}
+interface QuizEvent <<sealed>>
+QuizEventBus o--> QuizEventListener
+QuizEventBus ..> QuizEvent
+CountdownTimer --> QuizEventBus : pubblica TimerTick/Expired
+
+class ConsoleAnimationListener
+class StatsCollectorListener
+QuizEventListener <|.. ConsoleAnimationListener
+QuizEventListener <|.. StatsCollectorListener
+
+' === Strategy (opzionale, +4) ===
+interface ScoringStrategy {
+  +score(q, a, secLeft, dur): int
+}
+class ClassicScoring
+class TimeBoundScoring
+ScoringStrategy <|.. ClassicScoring
+ScoringStrategy <|.. TimeBoundScoring
+
+' === Orchestratore ===
+class QuizSession {
+  -quiz: Quiz
+  -scoring: ScoringStrategy
+  -bus: QuizEventBus
+  +run(): SessionResult
+}
+QuizSession --> Quiz
+QuizSession --> ScoringStrategy
+QuizSession --> QuizEventBus
+QuizSession --> ShuffleIterator
+QuizSession --> CountdownTimer
+
+class Scoreboard {
+  -file: Path
+  +add(r): void
+  +top(): List<SessionResult>
+  +totalScoreByQuiz(): Map<String,Integer>
+}
+
+class QuizLoader {
+  -factory: QuestionFactory
+  +loadFile(path): Quiz
+  +loadDirectory(dir): List<Quiz>
+}
+QuizLoader --> QuestionFactory
+
+class Menu {
+  +runLoop(): void
+}
+class ConsoleUI
+class InputReader
+Menu --> ConsoleUI
+Menu --> InputReader
+Menu --> QuizSession
+Menu --> Scoreboard
+
+class QuizMasterApp <<entry>>
+QuizMasterApp --> Menu
+QuizMasterApp --> ExceptionShield
+QuizMasterApp --> QuizLoader
+
+@enduml

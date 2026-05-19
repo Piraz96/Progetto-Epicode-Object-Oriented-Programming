@@ -1,0 +1,21 @@
+{
+  "name": "Fixture",
+  "description": "Quiz di test",
+  "questions": [
+    {
+      "id": "f1",
+      "type": "multiple_choice",
+      "text": "2+2 =",
+      "params": {
+        "options": ["3", "4", "5"],
+        "correct_index": 1
+      }
+    },
+    {
+      "id": "f2",
+      "type": "true_false",
+      "text": "Il sole sorge a est.",
+      "params": { "correct_answer": true }
+    }
+  ]
+}

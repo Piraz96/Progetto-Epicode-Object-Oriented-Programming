@@ -1,0 +1,11 @@
+{
+  "description": "Quiz senza nome",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "true_false",
+      "text": "?",
+      "params": { "correct_answer": true }
+    }
+  ]
+}
